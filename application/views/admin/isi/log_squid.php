@@ -7,8 +7,8 @@
         <small>Squid Proxy</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Squid Proxy</a></li>
+        <li class="active">Log</li>
       </ol>
     </section>
     <section class="content">
@@ -16,66 +16,39 @@
       <div class="row">
         <div class="col-lg-12 col-xs-12">
           <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="log_squid" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
+                  <th>No</th>
+                  <th>Waktu</th>
+                  <th>IP Asal</th>
+                  <th>Situs</th>
+                  <th>IP Tujuan</th>
+                  <th>Interface</th>
+                  <th>Perangkat</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 4.0</td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                 <tr>
-                        <td>Gecko</td>
-                        <td>Seamonkey 1.1</td>
-                        <td>Win 98+ / OSX.2+</td>
-                        <td>1.8</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Gecko</td>
-                        <td>Epiphany 2.20</td>
-                        <td>Gnome</td>
-                        <td>1.8</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Webkit</td>
-                        <td>Safari 1.2</td>
-                        <td>OSX.3</td>
-                        <td>125.5</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Misc</td>
-                        <td>IE Mobile</td>
-                        <td>Windows Mobile 6</td>
-                        <td>-</td>
-                        <td>C</td>
-                      </tr>
-                      <tr>
-                        <td>Misc</td>
-                        <td>PSP browser</td>
-                        <td>PSP</td>
-                        <td>-</td>
-                        <td>C</td>
-                      </tr>
-                      <tr>
-                        <td>Other browsers</td>
-                        <td>All others</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>U</td>
-                      </tr>
+                <?php $i=1;foreach ($log_squid as $log) { 
+                    //GETTING DOMAIN USING PREG MATCH
+                    // get host name from URL
+                    preg_match('@^(?:http://)?([^/]+)@i', $log['domain_tujuan'], $matches); $host = $matches[1];
+
+                    // get last two segments of host name
+                    preg_match('/[^.]+\.[^.]+$/', $host, $matches); 
+                    $domain = $matches[0];
+
+                  ?>
+                  <tr>
+                    <td><?php echo $i;?></td>
+                    <td><?php echo $log['waktu'];?></td>
+                    <td><?php echo $log['user_ip'];?></td>
+                    <td><?php echo $domain;?></td>
+                    <td><?php echo $log['ip_tujuan'];?></td>
+                    <td><?php echo $log['nama_interface'];?></td>
+                    <td><?php echo $log['nama_perangkat'];?></td>
+                  </tr>
+                <?php $i++ ;} ?>
               </tbody>
             </table>
         </div>

@@ -27,6 +27,24 @@ class Welcome extends CI_Controller {
 		);
 		$this->load->view('admin/wrapper', $data);
 	}
+
+	public function log_squid(){
+		$data=array(
+			'title'=>'Network Management System UPPTI FSM UNDIP',
+			'isi' =>'admin/isi/log_squid',
+			'log_squid' => $this->squid_model->get_log()
+		);
+		$this->load->view('admin/wrapper', $data);
+	}
+
+	public function popular_site(){
+		$data=array(
+			'title'=>'Network Management System UPPTI FSM UNDIP',
+			'isi' =>'admin/isi/popular_site',
+			'pop_site' => $this->squid_model->popular_site()
+		);
+		$this->load->view('admin/wrapper', $data);
+	}
 }
 
 /* End of file welcome.php */

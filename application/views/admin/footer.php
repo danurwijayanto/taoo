@@ -192,8 +192,16 @@
    
      <script type="text/javascript">
       $(function () {
-        $("#example1").dataTable();
-        });
+        $("#log_squid").dataTable();
+      });
+
+      $(function () {
+        $("#pop_site").dataTable();
+      });
+
+      $(function () {
+        $("#pop_site_2").dataTable();
+      });
     </script>
 
   </body>
