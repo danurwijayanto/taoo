@@ -17,7 +17,7 @@
 			return $result->result_array();
 		}
 
-
+		# Start Fungsi untuk menghitung statistik popular site
 		function select_userip(){
 			$query = "SELECT user_ip FROM squid_history GROUP BY user_ip";
 			$result = $this->db->query($query);
@@ -25,7 +25,7 @@
 		}
 
 		function count_domaintuj(){
-			$hasil = array();
+			#$hasil = array();
 			$userip = $this->select_userip();
 			$query_result = array();
 
@@ -44,6 +44,37 @@
 			}	
 			#print_r ($query_result);
 			return  $query_result;
+		}
+
+		function get_namaif(){
+			$userip2 = $this->count_domaintuj();
+			$query_result = array();
+			
+			foreach ($userip2 as $ip) {
+				$query = "SELECT a.nama_interface FROM data_interface  as a , data_ipaddress as b
+						WHERE SUBSTRING_INDEX('$ip[1]', '.', 3)=SUBSTRING_INDEX(b.ip_address, '.', 3) AND b.ip_addressindex=a.interface_index";
+				$result = $this->db->query($query);
+				$result = $result->result_array();
+				#print_r ($result);
+				foreach ($result as $row){
+					$query_result[] = array(
+										'domain' => $ip[0],
+										'ip_asal' => $ip[1],
+										'hit' => $ip[2],
+										'nama_if' => $row['nama_interface']
+									);
+				}
+			}	
+			#print_r ($query_result);
+			return  $query_result;
+		}
+
+		# End Fungsi untuk menghitung statistik popular site
+		function get_alldev(){
+			$query = "SELECT * FROM data_perangkat";
+			$result = $this->db->query($query);
+
+			return $result->result_array();
 		}
 	}	
 	/* End of file squid_model.php */

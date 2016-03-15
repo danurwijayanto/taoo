@@ -5,7 +5,7 @@
     <section class="content-header">
       <h1>
         Log 
-        <small>Situs Terpopuler</small>
+        <small>Situs Terpopuler Semua Interface</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Squid Proxy</a></li>
@@ -46,6 +46,12 @@
 
     <!-- Konten 2-->
     <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Log 
+        <small>Situs Terpopuler per Interface</small>
+      </h1>
+    </section>
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
@@ -67,9 +73,9 @@
               
               <tr>
                   <th><?php echo $i; ?></th>
-                  <th><?php echo $stats[1]; ?></th>
-                  <th><?php echo $stats[0]; ?></th>
-                  <th><?php echo $stats[2]; ?></th>
+                  <th><?php echo $stats['nama_if']; ?></th>
+                  <th><?php echo $stats['domain']; ?></th>
+                  <th><?php echo $stats['hit']; ?></th>
               </tr>
             
             <?php $i++; } ?>

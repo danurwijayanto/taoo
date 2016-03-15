@@ -295,7 +295,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Daftar Perangkat</a></li>
+                <li><a href="<?php echo base_url();?>index.php/welcome/data_perangkat"><i class="fa fa-circle-o"></i> Data Perangkat</a></li>
               </ul>
             </li>
             <li class="treeview">

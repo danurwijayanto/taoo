@@ -202,6 +202,10 @@
       $(function () {
         $("#pop_site_2").dataTable();
       });
+
+      $(function () {
+        $("#dat_per").dataTable();
+      });
     </script>
 
   </body>
