@@ -62,14 +62,14 @@
               </tr>
             </thead>
             <tbody>
-            <?php $i=1;foreach ($pop_site as $pop) {  
+            <?php $i=1;foreach ($stats as $stats) {  
             ?>
               
               <tr>
-                  <th><?php #echo $i; ?></th>
-                  <th></th>
-                  <th><?php #echo $pop['domain_tujuan']; ?></th>
-                  <th><?php #echo $pop['cnt']; ?></th>
+                  <th><?php echo $i; ?></th>
+                  <th><?php echo $stats[1]; ?></th>
+                  <th><?php echo $stats[0]; ?></th>
+                  <th><?php echo $stats[2]; ?></th>
               </tr>
             
             <?php $i++; } ?>

@@ -17,6 +17,34 @@
 			return $result->result_array();
 		}
 
+
+		function select_userip(){
+			$query = "SELECT user_ip FROM squid_history GROUP BY user_ip";
+			$result = $this->db->query($query);
+			return $result->result_array();
+		}
+
+		function count_domaintuj(){
+			$hasil = array();
+			$userip = $this->select_userip();
+			$query_result = array();
+
+			foreach ($userip as $ip) {
+				$query = "SELECT domain_tujuan, user_ip, count(domain_tujuan) as cnt FROM squid_history 
+						WHERE user_ip='$ip[user_ip]' GROUP BY domain_tujuan ORDER BY cnt DESC LIMIT 1";
+				$result = $this->db->query($query);
+				$result = $result->result_array();
+				foreach ($result as $row){
+					$query_result[] = array(
+										$row['domain_tujuan'],
+										$row['user_ip'],
+										$row['cnt'],
+									);
+				}
+			}	
+			#print_r ($query_result);
+			return  $query_result;
+		}
 	}	
 	/* End of file squid_model.php */
 	/* Location: ./application/models/squid_model.php */
