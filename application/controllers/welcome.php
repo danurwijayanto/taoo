@@ -51,7 +51,7 @@ class Welcome extends CI_Controller {
 		$data=array(
 			'title'=>'Network Management System UPPTI FSM UNDIP',
 			'isi' =>'admin/isi/data_perangkat',
-			'data_perangkat' => $this->squid_model->get_alldev()
+			'data_perangkat' => $this->snmp_model->get_alldev()
 		);
 		$this->load->view('admin/wrapper', $data);
 	}

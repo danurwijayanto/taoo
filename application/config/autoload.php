@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('squid_model');
+$autoload['model'] = array('squid_model', 'snmp_model');
 
 
 /* End of file autoload.php */
