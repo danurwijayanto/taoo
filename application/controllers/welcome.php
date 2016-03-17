@@ -55,6 +55,34 @@ class Welcome extends CI_Controller {
 		);
 		$this->load->view('admin/wrapper', $data);
 	}
+
+	public function tambah_perangkat(){
+		$data = array(
+					'id_perangkat'=> '',
+					'nama_perangkat' => $this->input->post('nama_perangkat'),
+					'ip_address' => $this->input->post('ip'),
+					'lokasi' => $this->input->post('lokasi'),
+					'community' => $this->input->post('community'),
+					'ver_snmp' => $this->input->post('ver')
+				);
+		$result=$this->snmp_model->simpan_perangkat($data);
+		echo "<script type='text/javascript'>alert('".$result."')</script>";
+		redirect('welcome/data_perangkat', 'refresh');
+	}
+
+	public function hapus_perangkat(){
+		$data = $_GET['id'];
+		$result=$this->snmp_model->hapus_perangkat($data);
+		echo "<script type='text/javascript'>alert('".$result."')</script>";
+		#redirect($this->agent->referrer(), 'refresh');
+		redirect('welcome/data_perangkat', 'refresh');
+	}
+
+	public function get_perangkat(){
+		$data = $_GET['id'];
+		$result=$this->snmp_model->get_perangkat($data);
+		echo json_encode($result);
+	}
 }
 
 /* End of file welcome.php */

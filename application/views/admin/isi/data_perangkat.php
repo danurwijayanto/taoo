@@ -31,6 +31,7 @@ function ping($host){
                   <th>No</th>
                   <th>Nama Perangkat</th>
                   <th>Alamat IP</th>
+                  <th>Lokasi</th>
                   <th>Status</th>
                   <th>Aksi</th>
                 </tr>
@@ -42,11 +43,12 @@ function ping($host){
                     <td><?php echo $i;?></td>
                     <td><?php echo $a['nama_perangkat'];?></td>
                     <td><?php echo $a['ip_address'];?></td>
+                    <td><?php echo $a['lokasi'];?></td>
                     <td><?php echo ping($a['ip_address']); ?></td>
                     <td>
-                      <a href="<?php #echo base_url();?>admin/edit_user?id=<?php #echo $daftar_user['id']; ?>" class="btn btn-primary">Edit</a>
+                      <a class="btn btn-primary edit_device" data-toggle="modal" data-target="#edit_device" id="<?php echo $a['id_perangkat']; ?>">Edit</a>
                       <a href="<?php #echo base_url();?>operation/del_user_byid?id=<?php #echo $daftar_user['id']; ?>" class="btn btn-success">Detail</a>
-                      <a href="<?php #echo base_url();?>operation/del_user_byid?id=<?php #echo $daftar_user['id']; ?>" class="btn btn-danger">Hapus</a>
+                      <a href="<?php echo base_url();?>index.php/welcome/hapus_perangkat?id=<?php echo $a['id_perangkat']; ?>" class="btn btn-danger">Hapus</a>
                     </td>
                   </tr>
                 <?php $i++ ;} ?>
@@ -68,29 +70,35 @@ function ping($host){
         <h4 class="modal-title">Tambah Perangkat</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form" method="post" action="<?php echo base_url();?>index.php/welcome/tambah_perangkat">
           <div class="form-group">
             <label class="control-label col-sm-2" for="nama_perangkat">Nama Perangkat:</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="nama_perangkat" placeholder="Nama Perangkat">
+              <input type="text" class="form-control" name="nama_perangkat" id="nama_perangkat" placeholder="Nama Perangkat">
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="ip">Alamat IP:</label>
             <div class="col-sm-10"> 
-              <input type="text" class="form-control" id="ip" placeholder="Alamat IP Perangkat">
+              <input type="text" class="form-control" name="ip" id="ip" placeholder="Alamat IP Perangkat">
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="ver">Versi SNMP:</label>
             <div class="col-sm-10"> 
-              <input type="text" class="form-control" id="ver" value="v1" disabled>
+              <input type="text" class="form-control" name="ver" id="ver" value="v1" disabled>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="community">Community:</label>
             <div class="col-sm-10"> 
-              <input type="text" class="form-control" id="community" placeholder="Nama Community SNMP">
+              <input type="text" class="form-control" name="community" id="community" placeholder="Nama Community SNMP">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="lokasi">Lokasi Perangkat:</label>
+            <div class="col-sm-10"> 
+              <input type="text" class="form-control" name="lokasi" id="lokasi" placeholder="Nama Community SNMP">
             </div>
           </div>
           <div class="form-group"> 
@@ -106,5 +114,112 @@ function ping($host){
     </div>
   </div>
 </div>
+<!-- End Modal Tambah Device -->
+
+<!-- Modal Edit Device -->
+<div class="modal fade" id="edit_device" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Perangkat</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" method="post" action="<?php echo base_url();?>index.php/welcome/tambah_perangkat">
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="nama_perangkat">Nama Perangkat:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="nama_perangkat1" id="nama_perangkat1" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="ip">Alamat IP:</label>
+            <div class="col-sm-10"> 
+              <input type="text" class="form-control" name="ip1" id="ip1" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="ver">Versi SNMP:</label>
+            <div class="col-sm-10"> 
+              <input type="text" class="form-control" name="ver1" id="ver1" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="community">Community:</label>
+            <div class="col-sm-10"> 
+              <input type="text" class="form-control" name="community1" id="community1" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="lokasi">Lokasi Perangkat:</label>
+            <div class="col-sm-10"> 
+              <input type="text" class="form-control" name="lokasi1" id="lokasi1" >
+            </div>
+          </div>
+          <div class="form-group"> 
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">Simpan</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Edit Device -->
+
+<!-- Fungsi Ajax -->
+<script>
+            
+  //Menampilkan kategori di modal sebelum dirubah 
+  $(document).ready(function(){
+    var id;
+    $(".edit_device").click(function(){
+      var element = $(this);
+      id = element.attr("id");
+     
+      $.ajax({
+        url:"../welcome/get_perangkat?id="+id,              
+        dataType : "json",
+        type: "POST",
+
+        success: function(data){
+          document.getElementById("nama_perangkat1").value = data[0].nama_perangkat;
+          document.getElementById("ip1").value = data[0].ip_address;
+          document.getElementById("ver1").value = data[0].ver_snmp;
+          document.getElementById("community1").value = data[0].community;
+          document.getElementById("lokasi1").value = data[0].lokasi;
+          //document.form_ganti_kat.action = "../operation/ganti_kategori?id="+id;   
+       }
+      });                        
+    });
+
+    //Menyimpan kategori baru telah dirubah
+    $(".simpan_edit_kat").click(function(){
+      var myData = 'value='+ document.getElementById("cat_text").value;
+     
+      $.ajax({
+        url:"../operation/ganti_kategori?id="+id,              
+        dataType : "json",
+        data : myData,
+        type: "POST",
+        success: success()       
+      });                        
+    });
+
+    // on success...
+    function success(){
+      alert('Perubahan Berhasil')
+       location.reload(); 
+    }
+  });
+
+  </script>
+<!-- End Fungsi Ajax-->
+
 
 

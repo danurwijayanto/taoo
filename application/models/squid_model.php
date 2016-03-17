@@ -68,6 +68,7 @@
 			#print_r ($query_result);
 			return  $query_result;
 		}
+		# End Fungsi untuk menghitung statistik popular site
 
 	}	
 	/* End of file squid_model.php */

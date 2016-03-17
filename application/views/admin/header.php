@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
 
     <title>NMS UP2TI FSM UNDIP</title>
+    
+    <!-- jQuery 2.1.4 -->
+    <script src="<?php echo base_url();?>etc/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
