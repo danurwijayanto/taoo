@@ -34,6 +34,17 @@
 	        $result = $this->db->query($query);
 	        return $result->result_array();
 		}
+
+		function simpan_edit_perangkat($data){
+			$query = "UPDATE data_perangkat SET nama_perangkat='$data[nama_perangkat]', ip_address='$data[ip_address]', lokasi='$data[lokasi]', community='$data[community]'
+				WHERE id_perangkat=$data[id]";
+	        $result = $this->db->query($query);
+	        if($this->db->affected_rows() > 0){
+	            return "Data Berhasil dipdate";
+	        } else {
+	            return $this->db->error;
+	        }
+		}
 	}	
 	/* End of file snmp_model.php */
 	/* Location: ./application/models/squid_model.php */

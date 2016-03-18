@@ -32,6 +32,8 @@ function ping($host){
                   <th>Nama Perangkat</th>
                   <th>Alamat IP</th>
                   <th>Lokasi</th>
+                  <th>Community</th>
+                  <th>Versi SNMP</th>
                   <th>Status</th>
                   <th>Aksi</th>
                 </tr>
@@ -44,10 +46,12 @@ function ping($host){
                     <td><?php echo $a['nama_perangkat'];?></td>
                     <td><?php echo $a['ip_address'];?></td>
                     <td><?php echo $a['lokasi'];?></td>
+                    <td><?php echo $a['community'];?></td>
+                    <td><?php echo $a['ver_snmp'];?></td>
                     <td><?php echo ping($a['ip_address']); ?></td>
                     <td>
                       <a class="btn btn-primary edit_device" data-toggle="modal" data-target="#edit_device" id="<?php echo $a['id_perangkat']; ?>">Edit</a>
-                      <a href="<?php #echo base_url();?>operation/del_user_byid?id=<?php #echo $daftar_user['id']; ?>" class="btn btn-success">Detail</a>
+                      <a href="<?php echo base_url();?>index.php/welcome/detail_perangkat?id=<?php echo $a['id_perangkat']; ?>" class="btn btn-success">Detail</a>
                       <a href="<?php echo base_url();?>index.php/welcome/hapus_perangkat?id=<?php echo $a['id_perangkat']; ?>" class="btn btn-danger">Hapus</a>
                     </td>
                   </tr>
@@ -86,7 +90,7 @@ function ping($host){
           <div class="form-group">
             <label class="control-label col-sm-2" for="ver">Versi SNMP:</label>
             <div class="col-sm-10"> 
-              <input type="text" class="form-control" name="ver" id="ver" value="v1" disabled>
+              <input type="text" class="form-control" name="ver" id="ver" value="v1" readonly>
             </div>
           </div>
           <div class="form-group">
@@ -126,7 +130,7 @@ function ping($host){
         <h4 class="modal-title">Edit Perangkat</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" role="form" method="post" action="<?php echo base_url();?>index.php/welcome/tambah_perangkat">
+        <form class="form-horizontal" role="form" method="post">
           <div class="form-group">
             <label class="control-label col-sm-2" for="nama_perangkat">Nama Perangkat:</label>
             <div class="col-sm-10">
@@ -142,7 +146,7 @@ function ping($host){
           <div class="form-group">
             <label class="control-label col-sm-2" for="ver">Versi SNMP:</label>
             <div class="col-sm-10"> 
-              <input type="text" class="form-control" name="ver1" id="ver1" disabled>
+              <input type="text" class="form-control" name="ver1" id="ver1" readonly>
             </div>
           </div>
           <div class="form-group">
@@ -159,7 +163,7 @@ function ping($host){
           </div>
           <div class="form-group"> 
             <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-default">Simpan</button>
+              <button type="submit" class="btn btn-default simpan_edit_device">Simpan</button>
             </div>
           </div>
         </form>
@@ -199,22 +203,26 @@ function ping($host){
     });
 
     //Menyimpan kategori baru telah dirubah
-    $(".simpan_edit_kat").click(function(){
-      var myData = 'value='+ document.getElementById("cat_text").value;
-     
+    $(".simpan_edit_device").click(function(){
+      var myData = 'nama_perangkat=' + document.getElementById("nama_perangkat1").value 
+                    + '&ip_address=' + document.getElementById("ip1").value
+                    + '&lokasi=' + document.getElementById("lokasi1").value
+                    + '&community=' + document.getElementById("community1").value ;
+      
       $.ajax({
-        url:"../operation/ganti_kategori?id="+id,              
+        url:"../welcome/simpan_edit_perangkat?id="+id,              
         dataType : "json",
         data : myData,
         type: "POST",
-        success: success()       
+        //success: success()       
       });                        
     });
 
     // on success...
     function success(){
-      alert('Perubahan Berhasil')
-       location.reload(); 
+      alert('Perubahan Berhasil');
+      redirect(site_url("welcome/data_perangkat"));
+      //location.reload(); 
     }
   });
 

@@ -83,7 +83,28 @@ class Welcome extends CI_Controller {
 		$result=$this->snmp_model->get_perangkat($data);
 		echo json_encode($result);
 	}
+
+	public function simpan_edit_perangkat(){
+		$data = array(
+				'id' => $_GET['id'],
+				'nama_perangkat' => $_POST['nama_perangkat'],
+				'ip_address' => $_POST['ip_address'],
+				'lokasi' => $_POST['lokasi'],
+				'community' => $_POST['community']
+			);
+		$result=$this->snmp_model->simpan_edit_perangkat($data);
+	}
+
+	public function detail_perangkat(){
+		$data = array(
+				'title'=>'Network Management System UPPTI FSM UNDIP',
+				'isi' =>'admin/isi/detail_perangkat',
+				'uptime' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.1.3.0")
+			);
+		$this->load->view('admin/wrapper', $data);
+	}
 }
 
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */
+
