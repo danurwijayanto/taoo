@@ -96,17 +96,32 @@ class Welcome extends CI_Controller {
 	}
 
 	public function detail_perangkat(){
+		$id = $_GET['id'];
 		$data = array(
 				'title'=>'Network Management System UPPTI FSM UNDIP',
-				'isi' =>'admin/isi/detail_perangkat'	
-			);
+				'isi' =>'admin/isi/detail_perangkat',
+				'detail' => $result=$this->snmp_model->get_perangkat($id)	
+		);
+		foreach ($data['detail'] as $ip) {
+			$ip = $ip["ip_address"];
+		}
+		//Session
+		$session_data = array(
+				'ip'=> $ip
+		);
+		$this->session->set_userdata('ip', $session_data);
+		//End Session
+
+
 		$this->load->view('admin/wrapper', $data);
 	}
 
 	public function uptime(){
+		$ip = $this->session->userdata('ip');
 		$data = array(
-					'uptime' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.1.3.0"),
-					'usedmem' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.25.2.3.1.6.65536")
+					//'nama_perangkat' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.1.1.0"),
+					'uptime' => snmpget($ip['ip'], "public", ".1.3.6.1.2.1.1.3.0"),
+					'usedmem' => snmpget($ip['ip'], "public", ".1.3.6.1.2.1.25.2.3.1.6.65536")
 				);
 		echo json_encode($data);
 	}

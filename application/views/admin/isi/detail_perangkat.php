@@ -17,6 +17,14 @@
       <div class="row">
         <div class="col-lg-12 col-xs-12">
           <div class="box-body">
+
+            <?php 
+             
+              foreach ($detail as $detail) { ?>
+                Nama Perangkat : <?php echo $detail['nama_perangkat'];?><br>
+            <?php    
+             }
+            ?>
             Uptime : <span id="uptime" ><?php #echo $uptime; ?></span><br>
             Used Memmory : <span id="usedmem" ><?php #echo $uptime; ?></span>
         </div>
