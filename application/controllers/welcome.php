@@ -98,10 +98,17 @@ class Welcome extends CI_Controller {
 	public function detail_perangkat(){
 		$data = array(
 				'title'=>'Network Management System UPPTI FSM UNDIP',
-				'isi' =>'admin/isi/detail_perangkat',
-				'uptime' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.1.3.0")
+				'isi' =>'admin/isi/detail_perangkat'	
 			);
 		$this->load->view('admin/wrapper', $data);
+	}
+
+	public function uptime(){
+		$data = array(
+					'uptime' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.1.3.0"),
+					'usedmem' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.25.2.3.1.6.65536")
+				);
+		echo json_encode($data);
 	}
 }
 
