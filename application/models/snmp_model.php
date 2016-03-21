@@ -45,6 +45,17 @@
 	            return $this->db->error;
 	        }
 		}
+
+		function get_interface_active(){
+			$query = "SELECT nama_interface, interface_index
+				FROM  data_interface, data_ipaddress
+				WHERE data_interface.interface_index=data_ipaddress.ip_addressindex AND data_interface.id_perangkat=data_ipaddress.id_perangkat GROUP BY nama_interface";
+
+			#$query = "SELECT nama_interface FROM data_interface GROUP BY nama_interface";
+			$result = $this->db->query($query);
+	        return $result->result_array();
+		}
+
 	}	
 	/* End of file snmp_model.php */
 	/* Location: ./application/models/squid_model.php */

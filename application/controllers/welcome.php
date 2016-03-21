@@ -116,6 +116,28 @@ class Welcome extends CI_Controller {
 		$this->load->view('admin/wrapper', $data);
 	}
 
+	public function statistik(){
+		$data = array(
+				'title'=>'Network Management System UPPTI FSM UNDIP',
+				'isi' =>'admin/isi/statistik',
+				'interface' => $this->snmp_model->get_interface_active()
+				//'history' => $this->squid_model->cari_history()
+		);
+		$this->load->view('admin/wrapper', $data);
+	}
+
+	public function cari_statistik(){
+		$id_if = $this->input->post('if');
+		$data = array(
+				'title'=>'Network Management System UPPTI FSM UNDIP',
+				'isi' =>'admin/isi/statistik',
+				'interface' => $this->snmp_model->get_interface_active(),
+				'history' => $this->squid_model->cari_statistik($id_if)
+		);
+		$this->load->view('admin/wrapper', $data);
+	}
+
+	//Fungsi ajax auto refresh
 	public function uptime(){
 		$ip = $this->session->userdata('ip');
 		$data = array(
@@ -125,6 +147,7 @@ class Welcome extends CI_Controller {
 				);
 		echo json_encode($data);
 	}
+	//End Fungsi Ajax auto refresh
 }
 
 /* End of file welcome.php */

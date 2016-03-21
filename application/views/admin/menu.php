@@ -286,6 +286,7 @@
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url();?>index.php/welcome/log_squid"><i class="fa fa-circle-o"></i> Log</a></li>
                 <li><a href="<?php echo base_url();?>index.php/welcome/popular_site"><i class="fa fa-circle-o"></i> Popular Site</a></li>
+                <li><a href="<?php echo base_url();?>index.php/welcome/statistik"><i class="fa fa-circle-o"></i> Statistik</a></li>
               </ul>
             </li>
             <li class="treeview">

@@ -1,3 +1,17 @@
+<?php 
+  function url($data){
+    //GETTING DOMAIN USING PREG MATCH
+    // get host name from URL
+    preg_match('@^(?:http://)?([^/]+)@i', $data, $matches); $host = $matches[1];
+
+    // get last two segments of host name
+    preg_match('/[^.]+\.[^.]+$/', $host, $matches); 
+    return $domain = $matches[0];
+
+  }
+
+?>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Konten 1-->
@@ -28,11 +42,12 @@
             </thead>
             <tbody>
             <?php $i=1;foreach ($pop_site as $pop) {  
+              $domain = url($pop['domain_tujuan']);    
             ?>
               
               <tr>
                   <th><?php echo $i; ?></th>
-                  <th><?php echo $pop['domain_tujuan']; ?></th>
+                  <th><?php echo $domain; ?></th>
                   <th><?php echo $pop['cnt']; ?></th>
               </tr>
             
@@ -69,12 +84,13 @@
             </thead>
             <tbody>
             <?php $i=1;foreach ($stats as $stats) {  
+              $domain = url($stats['domain']);    
             ?>
               
               <tr>
                   <th><?php echo $i; ?></th>
                   <th><?php echo $stats['nama_if']; ?></th>
-                  <th><?php echo $stats['domain']; ?></th>
+                  <th><?php echo $domain; ?></th>
                   <th><?php echo $stats['hit']; ?></th>
               </tr>
             

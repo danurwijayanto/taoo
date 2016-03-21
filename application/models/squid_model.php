@@ -6,7 +6,11 @@
 		*/
 		function get_log(){
 			#$query = "SELECT * FROM squid_history";
-			$query = "SELECT a.*, b.*, d.nama_perangkat, c.nama_interface FROM data_ipaddress as a RIGHT JOIN squid_history as b on SUBSTRING_INDEX(a.ip_address, '.', 3) = SUBSTRING_INDEX(b.user_ip, '.', 3) LEFT JOIN data_interface as c on a.ip_addressindex = c.interface_index LEFT JOIN data_perangkat as d on c.id_perangkat = d.id_perangkat";
+			$query = "SELECT a.*, b.*, d.nama_perangkat, c.nama_interface 
+						FROM data_ipaddress as a RIGHT JOIN squid_history as b 
+						on SUBSTRING_INDEX(a.ip_address, '.', 3) = SUBSTRING_INDEX(b.user_ip, '.', 3) 
+						LEFT JOIN data_interface as c on a.ip_addressindex = c.interface_index 
+						LEFT JOIN data_perangkat as d on c.id_perangkat = d.id_perangkat";
 	        $result = $this->db->query($query);
 			return $result->result_array();
 		}
@@ -70,6 +74,13 @@
 		}
 		# End Fungsi untuk menghitung statistik popular site
 
+		function cari_statistik($data){
+			$query = "SELECT domain_tujuan FROM data_interface as a, data_ipaddress as b, squid_history as c
+					WHERE a.interface_index=b.ip_addressindex and SUBSTRING_INDEX(c.user_ip, '.', 3)=SUBSTRING_INDEX(b.ip_address, '.', 3) and a.interface_index = $data";
+
+			$result = $this->db->query($query);
+			return $result->result_array();
+		}
 	}	
 	/* End of file squid_model.php */
 	/* Location: ./application/models/squid_model.php */
