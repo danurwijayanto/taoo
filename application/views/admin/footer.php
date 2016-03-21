@@ -187,7 +187,11 @@
     <script src="<?php echo base_url();?>etc/dist/js/app.min.js" type="text/javascript"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo base_url();?>etc/dist/js/demo.js" type="text/javascript"></script>
-<!-- datatables page script -->
+
+    <!-- Morris.js charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="<?php echo base_url();?>etc/plugins/morris/morris.min.js" type="text/javascript"></script>
+    <!-- datatables page script -->
    
      <script type="text/javascript">
       $(function () {
@@ -204,6 +208,10 @@
 
       $(function () {
         $("#dat_per").dataTable();
+      });
+
+      $(function () {
+        $("#detail_if").dataTable();
       });
     </script>
 

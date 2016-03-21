@@ -100,7 +100,8 @@ class Welcome extends CI_Controller {
 		$data = array(
 				'title'=>'Network Management System UPPTI FSM UNDIP',
 				'isi' =>'admin/isi/detail_perangkat',
-				'detail' => $result=$this->snmp_model->get_perangkat($id)	
+				'detail' => $this->snmp_model->get_perangkat($id),
+				'data_id' => $this->snmp_model->get_data_if($id)	
 		);
 		foreach ($data['detail'] as $ip) {
 			$ip = $ip["ip_address"];
@@ -121,7 +122,6 @@ class Welcome extends CI_Controller {
 				'title'=>'Network Management System UPPTI FSM UNDIP',
 				'isi' =>'admin/isi/statistik',
 				'interface' => $this->snmp_model->get_interface_active()
-				//'history' => $this->squid_model->cari_history()
 		);
 		$this->load->view('admin/wrapper', $data);
 	}
@@ -132,7 +132,7 @@ class Welcome extends CI_Controller {
 				'title'=>'Network Management System UPPTI FSM UNDIP',
 				'isi' =>'admin/isi/statistik',
 				'interface' => $this->snmp_model->get_interface_active(),
-				'history' => $this->squid_model->cari_statistik($id_if)
+				'statistik' => $this->squid_model->cari_statistik($id_if)
 		);
 		$this->load->view('admin/wrapper', $data);
 	}

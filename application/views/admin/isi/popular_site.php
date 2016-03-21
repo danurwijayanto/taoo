@@ -9,7 +9,6 @@
     return $domain = $matches[0];
 
   }
-
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -41,17 +40,26 @@
               </tr>
             </thead>
             <tbody>
-            <?php $i=1;foreach ($pop_site as $pop) {  
-              $domain = url($pop['domain_tujuan']);    
-            ?>
-              
-              <tr>
+            <?php 
+              $domhit = array();
+              foreach ($pop_site as $pop) {  
+                //Memasukkak ke array baru    
+                array_push($domhit,url($pop['domain_tujuan']));
+              } 
+              //Menghitung Jumlah Value Array yang Sama
+              $domhit = array_count_values($domhit);
+              //Sort Array (Descending Order), According to Value - arsort()
+              arsort($domhit);
+              $i=1;
+              foreach ($domhit as $domhit1 => $value) { ?>
+                <tr>
                   <th><?php echo $i; ?></th>
-                  <th><?php echo $domain; ?></th>
-                  <th><?php echo $pop['cnt']; ?></th>
-              </tr>
-            
-            <?php $i++; } ?>
+                  <th><?php echo $domhit1; ?></th>
+                  <th><?php echo $value; ?></th>
+                </tr>
+              <?php 
+              $i++; 
+              } ?>           
             </tbody>
             </table>
             <!-- END KONTEN -->

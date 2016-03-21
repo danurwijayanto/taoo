@@ -76,19 +76,69 @@
             </form>
             <br>
             <?php 
-            if (!isset($history)){
+            if (!isset($statistik)){
             }  else {
-                $domain = array();
-                foreach ($history as $his) { 
-                  array_push($domain,url($his['domain_tujuan']));
-                  echo url($his['domain_tujuan'])."<br>";
-                } 
-            } ?>
+                $domainhit = array();
+                foreach ($statistik as $stat) { 
+                  array_push($domainhit,url($stat['domain_tujuan']));
+                }
+
+                //Menghitung Jumlah Value Array yang Sama
+                $domainhit = array_count_values($domainhit);
+                #foreach ($domainhit as $key => $value) {
+                  #echo $key." || ".$value."<br>"; 
+            } #} ?>
             <br>
-            <?php echo print_r(array_count_values($domain))?>
             <!-- End Konten -->
+          </div>
         </div>
       </div>
     </section>
+
+
+     <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-12 col-xs-12">
+          <div class="box-body">
+            <!-- KONTEN -->  
+            <div class="box box-success">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Statistik</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body chart-responsive">
+                  <div class="chart" id="bar-chart" style="height: 300px;"></div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            <!-- END KONTEN -->
+        </div>
+      </div>
+    </div>
+    </section>
+
 </div><!-- /.content-wrapper -->
 
+<script>
+      $(function () {
+        "use strict";
+        //BAR CHART
+        var bar = new Morris.Bar({
+          element: 'bar-chart',
+          resize: true,
+          data: [
+            <?php foreach ($domainhit as $key => $value) { ?>
+              {y: '<?php echo $key; ?>', a: <?php echo $value; ?> },
+            <?php } ?>
+          ],
+          barColors: ['#00a65a'],
+          xkey: 'y',
+          ykeys: 'a',
+          labels: 'HIT',
+          hideHover: 'auto'
+        });
+      });
+  </script>

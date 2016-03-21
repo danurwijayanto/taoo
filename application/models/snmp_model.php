@@ -56,6 +56,15 @@
 	        return $result->result_array();
 		}
 
+		function get_data_if($data){
+			$query = "SELECT *
+				FROM  data_interface LEFT JOIN data_ipaddress
+				ON data_interface.interface_index=data_ipaddress.ip_addressindex AND data_interface.id_perangkat=data_ipaddress.id_perangkat
+				WHERE data_interface.id_perangkat=$data";
+			$result = $this->db->query($query);
+	        return $result->result_array();
+		}
+
 	}	
 	/* End of file snmp_model.php */
 	/* Location: ./application/models/squid_model.php */

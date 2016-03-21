@@ -17,7 +17,6 @@
       <div class="row">
         <div class="col-lg-12 col-xs-12">
           <div class="box-body">
-
             <?php 
              
               foreach ($detail as $detail) { ?>
@@ -27,6 +26,37 @@
             ?>
             Uptime : <span id="uptime" ><?php #echo $uptime; ?></span><br>
             Used Memmory : <span id="usedmem" ><?php #echo $uptime; ?></span>
+            <br><br>
+
+            <table id="detail_if" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Interface</th>
+                  <th>Status</th>
+                  <th>IP Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php $i=1;foreach ($data_id as $data) { 
+                    //GETTING DOMAIN USING PREG MATCH
+                    // get host name from URL
+                    #preg_match('@^(?:http://)?([^/]+)@i', $log['domain_tujuan'], $matches); $host = $matches[1];
+
+                    // get last two segments of host name
+                    #preg_match('/[^.]+\.[^.]+$/', $host, $matches); 
+                    #$domain = $matches[0];
+
+                  ?>
+                  <tr>
+                    <td><?php echo $i; ?></td>
+                    <td><?php echo $data['nama_interface']; ?></td>
+                    <td><?php echo $data['status'];?></td>
+                    <td><?php echo $data['ip_address'];?></td>
+                  </tr>
+                <?php $i++ ;} ?>
+              </tbody>
+            </table>
         </div>
       </div>
     </section>
@@ -45,11 +75,7 @@
           $('#usedmem').html(data['usedmem']);
         }
     }); 
-
-    //$('#links').load('test.php',function () {
-    //     $(this).unwrap();
-    //});
-}
+  }
 
   loadlink(); // This will run on page load
   setInterval(function(){
