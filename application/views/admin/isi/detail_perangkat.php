@@ -18,14 +18,23 @@
         <div class="col-lg-12 col-xs-12">
           <div class="box-body">
             <?php 
-             
+
               foreach ($detail as $detail) { ?>
-                Nama Perangkat : <?php echo $detail['nama_perangkat'];?><br>
+              Nama Perangkat : <?php echo $detail['nama_perangkat'];?><br>
             <?php    
              }
             ?>
-            Uptime : <span id="uptime" ><?php #echo $uptime; ?></span><br>
-            Used Memmory : <span id="usedmem" ><?php #echo $uptime; ?></span>
+            Uptime : <span id="uptime"></span>
+            <br><br>
+            
+
+                <input type="text" id="knob" class="knob" value="30" data-width="90" data-height="90" data-max=<?php echo $snmp['totmem'];?> data-fgColor="#3c8dbc" data-readonly="true"/>
+                      <div class="knob-label">Memmory Usage</div>
+               
+              
+            <br><br>
+            Max Memmory : <span id="totmem" ></span><br>
+            Used Memmory : <span id="usedmem" ></span>
             <br><br>
 
             <table id="detail_if" class="table table-bordered table-striped">
@@ -63,6 +72,26 @@
 </div><!-- /.content-wrapper -->
 
 <script>
+$(document).ready(function(){
+    $(function () {
+        /* jQueryKnob */
+
+        $(".knob").knob({
+          /*change : function (value) {
+           //console.log("change : " + value);
+           },
+           release : function (value) {
+           console.log("release : " + value);
+           },
+           cancel : function () {
+           console.log("cancel : " + this.value);
+           },*/
+
+        });
+        /* END JQUERY KNOB */
+
+      });
+
   function loadlink(){
     $.ajax({
         url:"../welcome/uptime",              
@@ -72,8 +101,15 @@
         success: function(data){
           //document.getElementById("uptime").value = data[0];
           $('#uptime').html(data['uptime']);
-          $('#usedmem').html(data['usedmem']);
-        }
+          //document.getElementById("knob").setAttribute("value", data['usedmem'].replace(/[INTEGER: ]/gi, ''));
+          //document.getElementById("knob").setAttribute("data-max", data['totmem'].replace(/[INTEGER: ]/gi, ''));
+          //$('#usedmem').html(data['usedmem'].replace(/[INTEGER: ]/gi, ''));
+          //$('#totmem').html(data['totmem'].replace(/[INTEGER: ]/gi, ''));
+          //Fungsi mngganti value knob 
+          $('.knob')
+            .val(data['usedmem'].replace(/[INTEGER: ]/gi, ''))
+            .trigger('change');
+          }
     }); 
   }
 
@@ -81,5 +117,5 @@
   setInterval(function(){
       loadlink() // this will run after every 5 seconds
   }, 3000);
-
+  });
 </script>

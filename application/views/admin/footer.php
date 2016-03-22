@@ -187,6 +187,8 @@
     <script src="<?php echo base_url();?>etc/dist/js/app.min.js" type="text/javascript"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo base_url();?>etc/dist/js/demo.js" type="text/javascript"></script>
+    <!-- jQuery Knob -->
+    <script src="<?php echo base_url();?>etc/plugins/knob/jquery.knob.js" type="text/javascript"></script>
 
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>

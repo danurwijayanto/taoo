@@ -101,12 +101,16 @@ class Welcome extends CI_Controller {
 				'title'=>'Network Management System UPPTI FSM UNDIP',
 				'isi' =>'admin/isi/detail_perangkat',
 				'detail' => $this->snmp_model->get_perangkat($id),
-				'data_id' => $this->snmp_model->get_data_if($id)	
+				'data_id' => $this->snmp_model->get_data_if($id)
+					
 		);
 		foreach ($data['detail'] as $ip) {
 			$ip = $ip["ip_address"];
 		}
-		//Session
+		$data['snmp'] = array(
+				'totmem' => preg_replace("/[INTEGER:]/","",snmpget($ip, "public", ".1.3.6.1.2.1.25.2.3.1.5.65536"))
+		);
+		//Session untuk menyimpan data ip untuk digunakan di ajax
 		$session_data = array(
 				'ip'=> $ip
 		);
