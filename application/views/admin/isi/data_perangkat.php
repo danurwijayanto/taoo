@@ -105,6 +105,16 @@ function ping($host){
               <input type="text" class="form-control" name="lokasi" id="lokasi" placeholder="Nama Community SNMP">
             </div>
           </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="os">OS :</label>
+            <div class="col-sm-10"> 
+              <select class="form-control" name="os" id="os">
+                <option value="0">-- Pilih OS --</option>
+                <option value="mikrotik">Mikrotik OS</option>
+                <option value="linux">Linux</option>
+              </select>
+            </div>
+          </div>
           <div class="form-group"> 
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-default">Submit</button>
@@ -161,6 +171,16 @@ function ping($host){
               <input type="text" class="form-control" name="lokasi1" id="lokasi1" >
             </div>
           </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="os1">OS :</label>
+            <div class="col-sm-10"> 
+              <select class="form-control" name="os1" id="os1">
+                <option value="0">-- Pilih OS --</option>
+                <option value="mikrotik">Mikrotik OS</option>
+                <option value="linux">Linux</option>
+              </select>
+            </div>
+          </div>
           <div class="form-group"> 
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-default simpan_edit_device">Simpan</button>
@@ -197,6 +217,7 @@ function ping($host){
           document.getElementById("ver1").value = data[0].ver_snmp;
           document.getElementById("community1").value = data[0].community;
           document.getElementById("lokasi1").value = data[0].lokasi;
+          document.getElementById("os1").value = data[0].os;
           //document.form_ganti_kat.action = "../operation/ganti_kategori?id="+id;   
        }
       });                        
@@ -207,7 +228,8 @@ function ping($host){
       var myData = 'nama_perangkat=' + document.getElementById("nama_perangkat1").value 
                     + '&ip_address=' + document.getElementById("ip1").value
                     + '&lokasi=' + document.getElementById("lokasi1").value
-                    + '&community=' + document.getElementById("community1").value ;
+                    + '&community=' + document.getElementById("community1").value 
+                    + '&os=' + document.getElementById("os1").value ;
       
       $.ajax({
         url:"../welcome/simpan_edit_perangkat?id="+id,              

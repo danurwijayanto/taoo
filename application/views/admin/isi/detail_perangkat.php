@@ -19,22 +19,30 @@
           <div class="box-body">
             <?php 
 
-              foreach ($detail as $detail) { ?>
+              foreach ($detail as $detail) {
+              $id = $detail['id_perangkat']; ?>
               Nama Perangkat : <?php echo $detail['nama_perangkat'];?><br>
-            <?php    
+              <?php    
              }
             ?>
             Uptime : <span id="uptime"></span>
-            <br><br>
-            
 
-                <input type="text" id="knob" class="knob" value="30" data-width="90" data-height="90" data-max=<?php echo $snmp['totmem'];?> data-fgColor="#3c8dbc" data-readonly="true"/>
-                      <div class="knob-label">Memmory Usage</div>
-               
-              
+            <!-- Knob Graph-->
             <br><br>
-            Max Memmory : <span id="totmem" ></span><br>
-            Used Memmory : <span id="usedmem" ></span>
+            <div class="knob-label">Memmory Usage</div><br>
+            <input type="text" id="knob" class="knob" value="30" data-width="90" data-height="90" data-max=<?php echo $snmp['totmem'];?> data-fgColor="#3c8dbc" data-readonly="true"/>              
+            <div class="knob-label">Total Memmory : <?php echo $snmp['totmem']." Kb";?></div>
+            <br><br>
+            <br><br>
+            <div class="knob-label">CPU Load</div><br>
+            <input type="text" id="knob1" class="knob1" value="30" data-width="90" data-height="90" data-max="100" data-fgColor="#3c8dbc" data-readonly="true"/>              
+            <br><br>
+            <!-- End Knob Graph-->
+
+            <!--
+              Max Memmory : <span id="totmem" ></span><br>
+              Used Memmory : <span id="usedmem" ></span>
+            -->
             <br><br>
 
             <table id="detail_if" class="table table-bordered table-striped">
@@ -44,49 +52,38 @@
                   <th>Nama Interface</th>
                   <th>Status</th>
                   <th>IP Address</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <?php $i=1;foreach ($data_id as $data) { 
-                    //GETTING DOMAIN USING PREG MATCH
-                    // get host name from URL
-                    #preg_match('@^(?:http://)?([^/]+)@i', $log['domain_tujuan'], $matches); $host = $matches[1];
-
-                    // get last two segments of host name
-                    #preg_match('/[^.]+\.[^.]+$/', $host, $matches); 
-                    #$domain = $matches[0];
-
                   ?>
                   <tr>
                     <td><?php echo $i; ?></td>
                     <td><?php echo $data['nama_interface']; ?></td>
                     <td><?php echo $data['status'];?></td>
                     <td><?php echo $data['ip_address'];?></td>
+                    <td>
+                      <a href="<?php echo base_url();?>index.php/welcome/detail_if?id=<?php echo $data['interface_index']; ?>" class="btn btn-success">Detail</a>
+                    </td>
                   </tr>
                 <?php $i++ ;} ?>
               </tbody>
             </table>
         </div>
+        <a href="<?php echo base_url();?>index.php/welcome/scan_interface?id=<?php echo $id; ?>" class="btn btn-primary" id="<?php #echo $a['id_perangkat']; ?>">Scan Interface</a>
       </div>
     </section>
 </div><!-- /.content-wrapper -->
 
 <script>
-$(document).ready(function(){
+//$(document).ready(function(){
     $(function () {
         /* jQueryKnob */
 
         $(".knob").knob({
-          /*change : function (value) {
-           //console.log("change : " + value);
-           },
-           release : function (value) {
-           console.log("release : " + value);
-           },
-           cancel : function () {
-           console.log("cancel : " + this.value);
-           },*/
-
+        });
+        $(".knob1").knob({
         });
         /* END JQUERY KNOB */
 
@@ -109,6 +106,9 @@ $(document).ready(function(){
           $('.knob')
             .val(data['usedmem'].replace(/[INTEGER: ]/gi, ''))
             .trigger('change');
+          $('.knob1')
+            .val(data['cpuload'].replace(/[INTEGER: ]/gi, ''))
+            .trigger('change');
           }
     }); 
   }
@@ -117,5 +117,5 @@ $(document).ready(function(){
   setInterval(function(){
       loadlink() // this will run after every 5 seconds
   }, 3000);
-  });
+  //});
 </script>

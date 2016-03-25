@@ -90,10 +90,26 @@ class Welcome extends CI_Controller {
 				'nama_perangkat' => $_POST['nama_perangkat'],
 				'ip_address' => $_POST['ip_address'],
 				'lokasi' => $_POST['lokasi'],
-				'community' => $_POST['community']
+				'community' => $_POST['community'],
+				'os' => $_POST['os'],
 			);
 		$result=$this->snmp_model->simpan_edit_perangkat($data);
 	}
+
+	public function scan_interface(){
+		$id = $_GET['id'];
+
+		$db = array(
+				'id' => $id,
+				'id_if' => snmpwalk("192.168.7.70", "public", ".1.3.6.1.2.1.2.2.1.1"),
+				'nama_if' => snmpwalk("192.168.7.70", "public", ".1.3.6.1.2.1.2.2.1.2"),
+				'status_if' => snmpwalk("192.168.7.70", "public", ".1.3.6.1.2.1.2.2.1.7")
+			);
+		$result=$this->snmp_model->simpan_scan_if($db);
+		echo "<script type='text/javascript'>alert('".$result."')</script>";
+		redirect('welcome/data_perangkat', 'refresh');
+	}
+
 
 	public function detail_perangkat(){
 		$id = $_GET['id'];
@@ -104,17 +120,27 @@ class Welcome extends CI_Controller {
 				'data_id' => $this->snmp_model->get_data_if($id)
 					
 		);
-		foreach ($data['detail'] as $ip) {
-			$ip = $ip["ip_address"];
+		foreach ($data['detail'] as $det) {
+			$ip = $det["ip_address"];
+			$os = $det["os"];
 		}
-		$data['snmp'] = array(
+		if ($os=="mikrotik"){
+			$data['snmp'] = array(
 				'totmem' => preg_replace("/[INTEGER:]/","",snmpget($ip, "public", ".1.3.6.1.2.1.25.2.3.1.5.65536"))
-		);
+			);		
+		}else{
+			$data['snmp'] = array(
+				'totmem' => preg_replace("/[INTEGER:]/","",snmpget($ip, "public", ".1.3.6.1.4.1.2021.4.5.0"))
+			);
+		}
+		
 		//Session untuk menyimpan data ip untuk digunakan di ajax
 		$session_data = array(
-				'ip'=> $ip
+				'ip'=> $ip,
+				'os' => $os
 		);
-		$this->session->set_userdata('ip', $session_data);
+		//Mengeset nama session sebagai sess dengan data session_data
+		$this->session->set_userdata('sess', $session_data);
 		//End Session
 
 
@@ -141,14 +167,36 @@ class Welcome extends CI_Controller {
 		$this->load->view('admin/wrapper', $data);
 	}
 
+	public function detail_if(){
+		$id_if = $this->input->post('id');
+		$data = array(
+				'title'=>'Network Management System UPPTI FSM UNDIP',
+				'isi' =>'admin/isi/detail_interface'
+				#'interface' => $this->snmp_model->get_interface_active(),
+				#'statistik' => $this->squid_model->cari_statistik($id_if)
+		);
+		$this->load->view('admin/wrapper', $data);
+	}
+
 	//Fungsi ajax auto refresh
 	public function uptime(){
-		$ip = $this->session->userdata('ip');
-		$data = array(
-					//'nama_perangkat' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.1.1.0"),
-					'uptime' => snmpget($ip['ip'], "public", ".1.3.6.1.2.1.1.3.0"),
-					'usedmem' => snmpget($ip['ip'], "public", ".1.3.6.1.2.1.25.2.3.1.6.65536")
-				);
+		$sess = $this->session->userdata('sess');
+		if ($sess['os']=="mikrotik") {
+			$data = array(
+				//'nama_perangkat' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.1.1.0"),
+				'uptime' => snmpget($sess['ip'], "public", ".1.3.6.1.2.1.1.3.0"),
+				'usedmem' => snmpget($sess['ip'], "public", ".1.3.6.1.2.1.25.2.3.1.6.65536"),
+				'cpuload' => snmpget($sess['ip'], "public", ".1.3.6.1.2.1.25.3.3.1.2.1")
+			);
+		}else{
+			$data = array(
+				//'nama_perangkat' => snmpget("182.255.0.34", "public", ".1.3.6.1.2.1.1.1.0"),
+				'uptime' => snmpget($sess['ip'], "public", ".1.3.6.1.2.1.1.3.0"),
+				'usedmem' => snmpget($sess['ip'], "public", ".1.3.6.1.4.1.2021.4.6.0"),
+				'cpuload' => snmpget($sess['ip'], "public", ".1.3.6.1.4.1.2021.11.9.0")
+			);
+		}
+		
 		echo json_encode($data);
 	}
 	//End Fungsi Ajax auto refresh
