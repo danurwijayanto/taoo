@@ -98,15 +98,19 @@ class Welcome extends CI_Controller {
 
 	public function scan_interface(){
 		$id = $_GET['id'];
+		$sess1 = $this->session->userdata('sess');
 
 		$db = array(
 				'id' => $id,
-				'id_if' => snmpwalk("192.168.7.70", "public", ".1.3.6.1.2.1.2.2.1.1"),
-				'nama_if' => snmpwalk("192.168.7.70", "public", ".1.3.6.1.2.1.2.2.1.2"),
-				'status_if' => snmpwalk("192.168.7.70", "public", ".1.3.6.1.2.1.2.2.1.7")
+				'id_if' => snmpwalk($sess1['ip'], "public", ".1.3.6.1.2.1.2.2.1.1"),
+				'nama_if' => snmpwalk($sess1['ip'], "public", ".1.3.6.1.2.1.2.2.1.2"),
+				'status_if' => snmpwalk($sess1['ip'], "public", ".1.3.6.1.2.1.2.2.1.7"),
+				'list_ip' => snmpwalk($sess1['ip'], "public", ".1.3.6.1.2.1.4.20.1.1"),
+				'ip_index' => snmpwalk($sess1['ip'], "public", ".1.3.6.1.2.1.4.20.1.2")
 			);
 		$result=$this->snmp_model->simpan_scan_if($db);
-		echo "<script type='text/javascript'>alert('".$result."')</script>";
+		$result1=$this->snmp_model->simpan_scan_ip($db);
+		echo "<script type='text/javascript'>alert('Perubahan Berhasil')</script>";
 		redirect('welcome/data_perangkat', 'refresh');
 	}
 
