@@ -65,6 +65,15 @@
 	        return $result->result_array();
 		}
 
+		// Controller welcome/detail_if
+		public function get_detail_if($data){
+			$query = "SELECT *
+				FROM  data_interface 
+				WHERE interface_index=$data[id_if] AND id_perangkat=$data[id_per]";
+			$result = $this->db->query($query);
+	        return $result->result_array();
+		}
+
 		function simpan_scan_if($db){
 			// Melakukan cek ke database
 			// Apabila interface id tersebut sudah ada maka akan dilakukan delete dan insert kembali

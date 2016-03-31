@@ -161,22 +161,32 @@ class Welcome extends CI_Controller {
 	}
 
 	public function cari_statistik(){
-		$id_if = $this->input->post('if');
+		
+		$post_data = array(
+				'id_if' => $this->input->post('if'),
+				'tawal' => $this->input->post('tanggal_awal'),
+				'takhir' => $this->input->post('tanggal_akhir')
+		);
+		 // print_r($post_data['tawal']);
 		$data = array(
 				'title'=>'Network Management System UPPTI FSM UNDIP',
 				'isi' =>'admin/isi/statistik',
 				'interface' => $this->snmp_model->get_interface_active(),
-				'statistik' => $this->squid_model->cari_statistik($id_if)
+				'statistik' => $this->squid_model->cari_statistik($post_data)
 		);
 		$this->load->view('admin/wrapper', $data);
 	}
 
 	public function detail_if(){
-		$id_if = $this->input->post('id');
+		$id = array(
+				'id_if' => $this->input->get('id_if'),
+				'id_per' => $this->input->get('id_per')
+		);
+		
 		$data = array(
 				'title'=>'Network Management System UPPTI FSM UNDIP',
-				'isi' =>'admin/isi/detail_interface'
-				#'interface' => $this->snmp_model->get_interface_active(),
+				'isi' =>'admin/isi/detail_interface',
+				'det_if' => $this->snmp_model->get_detail_if($id),
 				#'statistik' => $this->squid_model->cari_statistik($id_if)
 		);
 		$this->load->view('admin/wrapper', $data);

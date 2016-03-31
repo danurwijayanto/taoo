@@ -130,9 +130,11 @@
           element: 'bar-chart',
           resize: true,
           data: [
-            <?php foreach ($domainhit as $key => $value) { ?>
+            <?php 
+            if (!isset($domainhit)){}else{
+            foreach ($domainhit as $key => $value) { ?>
               {y: '<?php echo $key; ?>', a: <?php echo $value; ?> },
-            <?php } ?>
+            <?php } } ?>
           ],
           barColors: ['#00a65a'],
           xkey: 'y',

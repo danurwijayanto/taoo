@@ -64,7 +64,7 @@
                     <td><?php echo $data['status'];?></td>
                     <td><?php echo $data['ip_address'];?></td>
                     <td>
-                      <a href="<?php echo base_url();?>index.php/welcome/detail_if?id=<?php echo $data['interface_index']; ?>" class="btn btn-success">Detail</a>
+                      <a href="<?php echo base_url();?>index.php/welcome/detail_if?id_if=<?php echo $data['interface_index']; ?>&id_per=<?php echo $data['id_perangkat'];?>" class="btn btn-success">Detail</a>
                     </td>
                   </tr>
                 <?php $i++ ;} ?>

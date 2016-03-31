@@ -17,6 +17,10 @@
       <div class="row">
         <div class="col-lg-12 col-xs-12">
           <div class="box-body">
+            <?php foreach ($det_if as $det) {
+              echo $det['nama_interface'];
+              # code...
+            }?>
             <!-- -->
             <!-- -->
         </div>
