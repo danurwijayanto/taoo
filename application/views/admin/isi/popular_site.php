@@ -1,5 +1,5 @@
 <?php 
-  function url($data){
+  function url_view($data){
     //GETTING DOMAIN USING PREG MATCH
     // get host name from URL
     preg_match('@^(?:http://)?([^/]+)@i', $data, $matches); $host = $matches[1];
@@ -44,7 +44,7 @@
               $domhit = array();
               foreach ($pop_site as $pop) {  
                 //Memasukkak ke array baru    
-                array_push($domhit,url($pop['domain_tujuan']));
+                array_push($domhit,url_view($pop['domain_tujuan']));
               } 
               //Menghitung Jumlah Value Array yang Sama
               $domhit = array_count_values($domhit);
@@ -92,7 +92,7 @@
             </thead>
             <tbody>
             <?php $i=1;foreach ($stats as $stats) {  
-              $domain = url($stats['domain']);    
+              $domain = url_view($stats['domain']);    
             ?>
               
               <tr>

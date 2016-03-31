@@ -42,9 +42,10 @@ class Welcome extends CI_Controller {
 			'title'=>'Network Management System UPPTI FSM UNDIP',
 			'isi' =>'admin/isi/popular_site',
 			'pop_site' => $this->squid_model->popular_site(),
-			'stats' => $this->squid_model->get_namaif()
+			'stats' => $this->squid_model->get_namaif() 
+			// 'stats' => $this->squid_model->count_domaintuj() 
 		);
-		$this->load->view('admin/wrapper', $data);
+		 $this->load->view('admin/wrapper', $data);
 	}
 
 	public function data_perangkat(){

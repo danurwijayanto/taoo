@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2016 at 06:05 AM
+-- Generation Time: Mar 31, 2016 at 11:49 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `data_interface` (
   `nama_interface` varchar(50) NOT NULL,
   `status` varchar(10) NOT NULL,
   `id_perangkat` int(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=193 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `data_interface`
@@ -116,7 +116,22 @@ INSERT INTO `data_interface` (`id_interface`, `interface_index`, `nama_interface
 (75, 59, 'vlan920', 'up(1)', 2),
 (76, 60, 'vlan85', 'up(1)', 2),
 (77, 63, 'bridge85', 'up(1)', 2),
-(78, 64, 'bridge920', 'up(1)', 2);
+(78, 64, 'bridge920', 'up(1)', 2),
+(172, 1, 'ether1-gateway', 'up(1)', 12),
+(173, 2, 'ether2-local', 'up(1)', 12),
+(174, 3, 'ether3-config', 'up(1)', 12),
+(175, 4, 'ether4-gateway', 'up(1)', 12),
+(176, 5, 'ether5-slave-local', 'down(2)', 12),
+(177, 6, 'vlan80', 'up(1)', 12),
+(178, 7, 'vlan80/toCCTV', 'down(2)', 12),
+(179, 8, 'bridge80', 'up(1)', 12),
+(180, 9, 'vlan70', 'up(1)', 12),
+(187, 1, 'lo', 'up(1)', 13),
+(188, 2, 'eth0', 'up(1)', 13),
+(189, 3, 'eth0.0', 'up(1)', 13),
+(190, 4, 'eth0.1', 'up(1)', 13),
+(191, 5, 'br-lan', 'up(1)', 13),
+(192, 6, 'wl0', 'up(1)', 13);
 
 -- --------------------------------------------------------
 
@@ -129,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `data_ipaddress` (
   `id_perangkat` int(10) NOT NULL,
   `ip_address` varchar(15) NOT NULL,
   `ip_addressindex` int(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `data_ipaddress`
@@ -171,7 +186,13 @@ INSERT INTO `data_ipaddress` (`id_ipaddress`, `id_perangkat`, `ip_address`, `ip_
 (33, 2, '192.168.11.1', 58),
 (34, 2, '192.168.12.1', 9),
 (35, 2, '192.168.13.1', 5),
-(36, 2, '192.168.156.1', 57);
+(36, 2, '192.168.156.1', 57),
+(45, 12, '172.20.7.2', 9),
+(46, 12, '192.168.0.253', 2),
+(47, 12, '192.168.2.253', 2),
+(48, 12, '192.168.135.253', 2),
+(51, 13, '127.0.0.1', 1),
+(52, 13, '192.168.7.70', 5);
 
 -- --------------------------------------------------------
 
@@ -183,16 +204,21 @@ CREATE TABLE IF NOT EXISTS `data_perangkat` (
   `id_perangkat` int(11) NOT NULL,
   `nama_perangkat` varchar(100) NOT NULL,
   `ip_address` varchar(15) NOT NULL,
-  `ver_snmp` varchar(3) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `lokasi` varchar(100) NOT NULL,
+  `community` varchar(100) NOT NULL,
+  `ver_snmp` varchar(3) NOT NULL,
+  `os` varchar(15) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `data_perangkat`
 --
 
-INSERT INTO `data_perangkat` (`id_perangkat`, `nama_perangkat`, `ip_address`, `ver_snmp`) VALUES
-(1, 'Mikrotik Dinara', '182.255.0.34', 'v1'),
-(2, 'Mikrotik IF Gedung E', '172.20.5.3', 'v1');
+INSERT INTO `data_perangkat` (`id_perangkat`, `nama_perangkat`, `ip_address`, `lokasi`, `community`, `ver_snmp`, `os`) VALUES
+(1, 'Mikrotik Dinara', '182.255.0.34', 'UP2TI', 'public', 'v1', 'mikrotik'),
+(2, 'Mikrotik IF Gedung E', '172.20.5.3', 'Lab Informatika Gedung E', 'public', 'v1', 'mikrotik'),
+(12, 'Mikrotik Rb 1200', '172.20.7.2', 'Lab Statistik', 'public', 'v1', 'mikrotik'),
+(13, 'Hotspot Lab B IF', '192.168.7.70', 'Lab B IF', 'public', 'v1', 'linux');
 
 -- --------------------------------------------------------
 
@@ -202,7 +228,7 @@ INSERT INTO `data_perangkat` (`id_perangkat`, `nama_perangkat`, `ip_address`, `v
 
 CREATE TABLE IF NOT EXISTS `squid_history` (
   `no` int(11) NOT NULL,
-  `waktu` varchar(25) NOT NULL,
+  `waktu` datetime NOT NULL,
   `user_ip` varchar(15) NOT NULL,
   `domain_tujuan` varchar(100) NOT NULL,
   `ip_tujuan` varchar(15) NOT NULL
@@ -424,17 +450,17 @@ ALTER TABLE `squid_history`
 -- AUTO_INCREMENT for table `data_interface`
 --
 ALTER TABLE `data_interface`
-  MODIFY `id_interface` int(255) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=79;
+  MODIFY `id_interface` int(255) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=193;
 --
 -- AUTO_INCREMENT for table `data_ipaddress`
 --
 ALTER TABLE `data_ipaddress`
-  MODIFY `id_ipaddress` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
+  MODIFY `id_ipaddress` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
 --
 -- AUTO_INCREMENT for table `data_perangkat`
 --
 ALTER TABLE `data_perangkat`
-  MODIFY `id_perangkat` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id_perangkat` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `squid_history`
 --

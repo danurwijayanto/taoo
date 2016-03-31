@@ -33,21 +33,86 @@
 			#$hasil = array();
 			$userip = $this->select_userip();
 			$query_result = array();
+			$domhit = array();
+			$domhit_fix = array();
+
+			function url($data){
+			    //GETTING DOMAIN USING PREG MATCH
+			    // get host name from URL
+			    preg_match('@^(?:http://)?([^/]+)@i', $data, $matches); $host = $matches[1];
+
+			    // get last two segments of host name
+			    preg_match('/[^.]+\.[^.]+$/', $host, $matches); 
+			    return $domain = $matches[0];
+
+			  }
 
 			foreach ($userip as $ip) {
-				$query = "SELECT domain_tujuan, user_ip, count(domain_tujuan) as cnt FROM squid_history 
-						WHERE user_ip='$ip[user_ip]' GROUP BY domain_tujuan ORDER BY cnt DESC LIMIT 1";
+				// $query = "SELECT domain_tujuan, user_ip, count(domain_tujuan) as cnt FROM squid_history 
+				// 		WHERE user_ip='$ip[user_ip]' GROUP BY domain_tujuan ORDER BY cnt DESC LIMIT 1";
+				// $result = $this->db->query($query);
+				// $result = $result->result_array();
+				// foreach ($result as $row){
+				// $query_result[] = array(
+				// 						$row['domain_tujuan'],
+				// 						$row['user_ip'],
+				// 						$row['cnt'],
+				// 					);
+				// }
+				// TEST QUERY
+				$query = "SELECT domain_tujuan, user_ip FROM squid_history 
+						WHERE user_ip='$ip[user_ip]'";
 				$result = $this->db->query($query);
 				$result = $result->result_array();
-				foreach ($result as $row){
-					$query_result[] = array(
-										$row['domain_tujuan'],
-										$row['user_ip'],
-										$row['cnt'],
-									);
-				}
+
+				foreach ($result as $pop) {  
+	                //Memasukkak ke array baru    
+	                array_push($domhit,url($pop['domain_tujuan']));
+              	}
+              	//Menghitung Jumlah Value Array yang Sama
+              	$domhit = array_count_values($domhit);
+				
+				//Sort Array (Descending Order), According to Value - arsort()
+              	arsort($domhit);
+              	// print_r($domhit);
+              	//membuat Array dengan Index dan Mengambil array pertama
+              	// $i=0;
+              	foreach ($domhit as $dom => $cnt) {
+              	 	$domhit_fix[]=array(
+              	 					$dom, 
+              	 					$cnt
+              	 				);
+              		// if ($i==1){
+              		// 	break;
+              		// }else{
+              		// 	$domain = $dom;
+              		// 	$cnt = $cnt;
+              		// }
+              		
+              		// // break;
+              		// $i++;
+              	 }
+              	 // $domain  = 
+				// print_r($domhit_fix[0][0]);
+
+
+				// foreach ($userip as $row){
+				$query_result[] = array(
+									// $row['domain_tujuan'],
+									$domhit_fix[0][0],
+									$ip['user_ip'],
+									$domhit_fix[0][1]
+									// $row['cnt'], DOMHIT
+								);
+				// }	
+				// Unset Array
+				unset($domhit);
+				unset($domhit_fix);
+				$domhit = array();
+				$domhit_fix = array();
 			}	
-			#print_r ($query_result);
+
+			// print_r ($query_result);
 			return  $query_result;
 		}
 
@@ -70,7 +135,7 @@
 									);
 				}
 			}	
-			#print_r ($query_result);
+			// print_r ($query_result);
 			return  $query_result;
 		}
 		# End Fungsi untuk menghitung statistik popular site
